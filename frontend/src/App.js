@@ -8,7 +8,7 @@ import MainRoutes from './routes/MainRoutes';
 
 function App() {
   const HeaderLinks = [
-    { text: "Конвертер", url: "/converter" },
+    { text: "Генератор", url: "/generator" },
   ];
 
   const [user, setUser] = useState(null);

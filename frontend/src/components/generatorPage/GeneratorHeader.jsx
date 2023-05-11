@@ -9,7 +9,7 @@ function DialogItem(props) {
   );
 }
 
-export const ConvertHeader = (props) => {
+export const GeneratorHeader = (props) => {
   let isAuthorised = props.isAuthorised;
   return (
     <>
@@ -20,7 +20,7 @@ export const ConvertHeader = (props) => {
           <Link text={"Сохранение 2"} href={"save/2"} />
           <Link text={"Сохранение 3"} href={"save/3"} />
         </>
-          : <p className='text-secondary tab-text user-select-none'>Ввойдите для использования сохранений</p>
+          : <p className='text-secondary tab-text user-select-none'>Войдите для использования сохранений</p>
         }
       </Nav>
     </>

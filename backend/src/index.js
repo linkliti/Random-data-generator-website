@@ -3,9 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
 const authRoute = require("./authRoute");
+const generatorRoute = require("./generatorRoute");
 const cookieSession = require("cookie-session");
 const passportStrategy = require("./passport");
 const app = express();
+
+//const generator = require("./generator/generator");
+//console.log(generator.getOptions());
 
 app.use(
     cookieSession({
@@ -26,7 +30,9 @@ app.use(
     })
 );
 
+
 app.use("/auth", authRoute);
+app.use("/generator", generatorRoute);
 
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Listenting on port ${port}...`));

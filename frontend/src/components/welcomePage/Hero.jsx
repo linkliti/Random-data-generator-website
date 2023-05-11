@@ -15,7 +15,7 @@ function Hero() {
             Проект направленный на создание случайных данных.
           </p>
           <Container className="gap-2 d-md-flex justify-content-md-start">
-              <Link className="btn btn-lg px-4 me-2 btn-primary" text="Перейти к генератору" href="/converter"/>
+              <Link className="btn btn-lg px-4 me-2 btn-primary" text="Перейти к генератору" href="/generator"/>
           </Container >
         </Col>
       </Row>

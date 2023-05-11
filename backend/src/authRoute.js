@@ -32,7 +32,7 @@ router.get('/microsoft/callback',
     passport.authenticate('microsoft', { failureRedirect: '/' }),
     function (req, res) {
         // Successful authentication, redirect home.
-        res.redirect(process.env.CLIENT_URL + '/converter');
+        res.redirect(process.env.CLIENT_URL + '/generator');
     });
 
 router.get("/logout", (req, res) => {

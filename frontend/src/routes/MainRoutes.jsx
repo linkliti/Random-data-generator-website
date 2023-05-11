@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HeroAuthorised from "../components/welcomePage/HeroAuthorised";
 import Hero from "../components/welcomePage/Hero";
-import Converter from "../components/converterPage/Converter";
+import Generator from "../components/generatorPage/Generator";
 import NotFound from "../components/basePage/NotFound";
 
 export const MainRoutes = (props) => {
@@ -12,7 +12,7 @@ export const MainRoutes = (props) => {
         ? <HeroAuthorised user={props.user} />
         : <Hero />}
       />
-      <Route exact path="/converter/*" element={<Converter isAuthorised={isAuthorised}/>} />
+      <Route exact path="/generator/*" element={<Generator isAuthorised={isAuthorised}/>} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );
