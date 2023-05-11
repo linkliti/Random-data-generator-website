@@ -1,0 +1,49 @@
+// React built-in
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+// Custom styles
+$primary: #9300ff;
+$white: white;
+$dark: #1e0035;
+$danger: red;
+// Separators
+$info: #50008c;
+// Gray text
+$text-muted: #ccc;
+$secondary: #ccc;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+// Purple text selection
+::-moz-selection {
+    /* Code for Firefox */
+    background: #AE3FE9;
+    color: #FFFFFF;
+}
+
+::selection {
+    background: #AE3FE9;
+    color: #FFFFFF;
+}
+
+// No scrollbar page shift
+html {
+    overflow-y: scroll;
+}
+
+// Text justification
+.text-justify {
+    text-align: justify;
+}
