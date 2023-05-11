@@ -1,16 +1,16 @@
 // React built-in
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 // Custom styles
@@ -23,27 +23,48 @@ $info: #50008c;
 // Gray text
 $text-muted: #ccc;
 $secondary: #ccc;
+// tabs
+$nav-tabs-border-color: $info;
+$nav-tabs-link-active-border-color: $info;
+$nav-tabs-link-hover-border-color: $info;
+
+$nav-link-color: $secondary;
+
+$nav-tabs-link-active-color: $white;
+$nav-link-hover-color: $white;
+
+$nav-tabs-link-active-bg: $primary;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
 // Purple text selection
 ::-moz-selection {
-    /* Code for Firefox */
-    background: #AE3FE9;
-    color: #FFFFFF;
+  /* Code for Firefox */
+  background: #AE3FE9;
+  color: #FFFFFF;
 }
 
 ::selection {
-    background: #AE3FE9;
-    color: #FFFFFF;
+  background: #AE3FE9;
+  color: #FFFFFF;
 }
 
 // No scrollbar page shift
 html {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 // Text justification
 .text-justify {
-    text-align: justify;
+  text-align: justify;
+}
+
+// Fake navlink
+.tab-text {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  text-decoration: none;
+  margin: 0;
 }
