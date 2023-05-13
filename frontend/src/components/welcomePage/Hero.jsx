@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { Link } from "../basePage/NavLink";
+import { NavLink } from "react-router-dom";
+import { Nav, NavItem, Button } from "react-bootstrap";
 
 function Hero() {
   return (
@@ -12,11 +13,11 @@ function Hero() {
             Проект направленный на создание случайных данных.
           </p>
           <Container className="gap-2 d-md-flex justify-content-md-start">
-            <Link
-              className="btn btn-lg px-4 me-2 btn-primary"
-              text="Перейти к генератору"
-              href="/generator"
-            />
+            <NavItem>
+              <Nav.Link as={NavLink} to="/generator/default">
+                <Button className="btn-lg">Перейти к генератору</Button>
+              </Nav.Link>
+            </NavItem>
           </Container>
         </Col>
       </Row>

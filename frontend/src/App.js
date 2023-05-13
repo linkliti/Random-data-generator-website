@@ -9,7 +9,10 @@ import Header from "./components/basePage/Header";
 import MainRoutes from "./routes/MainRoutes";
 
 const App = observer(() => {
-  const HeaderLinks = [{ text: "Генератор", url: "/generator" }];
+  const HeaderLinks = [
+    { text: "Генератор", url: "/generator/default" },
+    { text: "Документация Faker", url: "/doc" },
+  ];
 
   const { user } = useContext(Context);
 
@@ -26,7 +29,7 @@ const App = observer(() => {
 
   useEffect(() => {
     getUser();
-  });
+  }, []);
 
   // Empty container used for sticky footer
   return (

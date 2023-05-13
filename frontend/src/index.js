@@ -2,21 +2,27 @@ import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import UserStore from "./store/store";
+import UserStore from "./store/UserStore";
+import GeneratorStore from "./store/GeneratorStore";
 
 export const Context = createContext(null);
+export const GenContext = createContext(null);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Context.Provider
+  <BrowserRouter>
+    <Context.Provider
+      value={{
+        user: new UserStore(),
+      }}
+    >
+      <GenContext.Provider
         value={{
-          user: new UserStore(),
+          genOpt: new GeneratorStore(),
         }}
       >
         <App />
-      </Context.Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+      </GenContext.Provider>
+    </Context.Provider>
+  </BrowserRouter>
 );
