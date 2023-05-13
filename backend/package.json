@@ -18,6 +18,7 @@
     "nodemon": "^2.0.22",
     "passport": "^0.5.3",
     "passport-azure-ad-oauth2": "^0.0.4",
-    "passport-microsoft": "^1.0.0"
+    "passport-microsoft": "^1.0.0",
+    "pg": "^8.10.0"
   }
 }

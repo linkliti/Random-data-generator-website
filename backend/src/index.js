@@ -12,24 +12,23 @@ const app = express();
 //console.log(generator.getOptions());
 
 app.use(
-    cookieSession({
-        name: "session",
-        keys: ["rdg"],
-        maxAge: 24 * 60 * 60 * 100,
-    })
+  cookieSession({
+    name: "session",
+    keys: ["rdg"],
+    maxAge: 24 * 60 * 60 * 100,
+  })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(
-    cors({
-        origin: process.env.CLIENT_URL,
-        methods: "GET,POST,PUT,DELETE",
-        credentials: true,
-    })
+  cors({
+    origin: process.env.CLIENT_URL,
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
 );
-
 
 app.use("/auth", authRoute);
 app.use("/generator", generatorRoute);

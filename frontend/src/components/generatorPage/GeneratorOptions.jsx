@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 
-export const GeneratorOptions = (props) => {
+export const GeneratorOptions = () => {
   let [options, setOptions] = useState(false);
   function getOptions() {
-    fetch('http://localhost:3001/generator/options')
-      .then(response => {
+    fetch("http://localhost:3001/generator/options")
+      .then((response) => {
         return response.text();
       })
-      .then(data => {
+      .then((data) => {
         setOptions(data);
       });
   }
@@ -17,7 +17,7 @@ export const GeneratorOptions = (props) => {
 
   return (
     <>
-      <p className=''>{options}</p>
+      <p className="">{options}</p>
     </>
-  )
-}
+  );
+};

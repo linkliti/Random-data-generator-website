@@ -1,23 +1,24 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Container } from 'react-bootstrap';
-import './assets/bootstrap.scss';
-import Footer from './components/basePage/Footer';
-import Header from './components/basePage/Header';
-import MainRoutes from './routes/MainRoutes';
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect } from "react";
+import { Container } from "react-bootstrap";
+import { Context } from ".";
+import "./assets/bootstrap.scss";
+import Footer from "./components/basePage/Footer";
+import Header from "./components/basePage/Header";
+import MainRoutes from "./routes/MainRoutes";
 
-function App() {
-  const HeaderLinks = [
-    { text: "Генератор", url: "/generator" },
-  ];
+const App = observer(() => {
+  const HeaderLinks = [{ text: "Генератор", url: "/generator" }];
 
-  const [user, setUser] = useState(null);
+  const { user } = useContext(Context);
 
   const getUser = async () => {
     try {
       const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
       const { data } = await axios.get(url, { withCredentials: true });
-      setUser(data.user._json);
+      user.setUser(data.user._json);
+      user.setIsAuth(true);
     } catch (err) {
       console.log(err);
     }
@@ -25,23 +26,19 @@ function App() {
 
   useEffect(() => {
     getUser();
-  }, []);
-
-  var isAuthorised = (user != null);
+  });
 
   // Empty container used for sticky footer
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header links={HeaderLinks} email={isAuthorised ? user.userPrincipalName : false} />
+      <Header links={HeaderLinks} />
       <Container className="mt-4">
-        <MainRoutes user={isAuthorised ? user : false} />
+        <MainRoutes />
       </Container>
-      <Container className='flex-grow-1'>
-      </Container>
+      <Container className="flex-grow-1"></Container>
       <Footer />
     </div>
   );
-}
-
+});
 
 export default App;

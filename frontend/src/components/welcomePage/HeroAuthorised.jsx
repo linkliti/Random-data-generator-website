@@ -1,15 +1,18 @@
+import { useContext } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { Context } from "../..";
 
-import { Container, Row, Col } from 'react-bootstrap';
-function HeroAuthorised(props) {
-  const user = props.user;
+function HeroAuthorised() {
+  const { user } = useContext(Context);
+
   return (
     <Container>
       <h1>Главная</h1>
       <Row>
         <Col>
           <h2>Профиль</h2>
-          <p>Имя: {user.displayName} </p>
-          <p>Почта: {user.userPrincipalName} </p>
+          <p>Имя: {user.user.displayName} </p>
+          <p>Почта: {user.user.userPrincipalName} </p>
         </Col>
       </Row>
     </Container>

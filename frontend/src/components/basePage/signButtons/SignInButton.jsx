@@ -1,7 +1,6 @@
 import Button from "react-bootstrap/Button";
 
 export const SignInButton = () => {
-
   const handleLogin = () => {
     window.open(
       `${process.env.REACT_APP_API_URL}/auth/microsoft/callback`,
@@ -10,6 +9,8 @@ export const SignInButton = () => {
   };
 
   return (
-    <Button variant="primary" className="ml-auto" onClick={() => handleLogin()}>Вход с помощью Microsoft</Button>
+    <Button variant="primary" className="ml-auto" onClick={() => handleLogin()}>
+      Вход с помощью Microsoft
+    </Button>
   );
-}
+};

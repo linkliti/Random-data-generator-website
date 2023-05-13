@@ -1,6 +1,3 @@
 export const GeneratorTable = (props) => {
-  return (
-    <>
-    </>
-  )
-}
+  return <></>;
+};
