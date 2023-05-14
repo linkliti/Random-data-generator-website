@@ -4,7 +4,7 @@ export default function FakerDoc() {
   return (
     <iframe
       className="w-100 min-vh-100"
-      src={`https://fakerjs.dev/api/`}
+      src={`https://next.fakerjs.dev/api/`}
     ></iframe>
   );
 }

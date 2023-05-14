@@ -1,13 +1,52 @@
-import { Container } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
+import { GenContext } from "../..";
+import { useContext } from "react";
+import { observer } from "mobx-react-lite";
 
-export const GeneratorTable = (props) => {
-
-  var text = props.text || 'Для появления результата заполните настройки и нажмите "Сгенерировать"'
+export const GeneratorTable = observer(() => {
+  const { genOpt } = useContext(GenContext);
+  var arr = genOpt.result;
+  function parseArr(arr) {
+    if (
+      !(
+        arr ===
+        'Для появления результата заполните настройки и нажмите "Сгенерировать"'
+      )
+    ) {
+      arr = JSON.parse(arr);
+      var separator = "";
+      if (genOpt.outCommas) separator += ",";
+      if (genOpt.outNewLine) separator += "\n";
+      else separator += " ";
+      if (genOpt.outWrap) {
+        return '"' + arr.join('"' + separator + '"') + '"';
+      } else return arr.join(separator);
+    }
+    else return arr;
+  }
 
   return (
     <div className="mt-4">
-      <h4>Результат:</h4>
-      <div className="w-100 border rounded p-2">{text}</div>
+      <Row className="mb-4">
+        <Col className="col-2">
+          <h4 className="mt-1">Результат:</h4>
+        </Col>
+        <Col>
+          <Button
+            onClick={() => {
+              navigator.clipboard.writeText(parseArr(genOpt.result));
+            }}
+          >
+            Копировать
+          </Button>
+        </Col>
+      </Row>
+      <div
+        className="w-100 border rounded p-2"
+        style={{ "white-space": "pre-wrap" }}
+      >
+        {parseArr(genOpt.result)}
+      </div>
     </div>
   );
-};
+});
