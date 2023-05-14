@@ -43,7 +43,7 @@ export const GeneratorTable = observer(() => {
       </Row>
       <div
         className="w-100 border rounded p-2"
-        style={{ "white-space": "pre-wrap" }}
+        style={{ "whiteSpace": "pre-wrap" }}
       >
         {parseArr(genOpt.result)}
       </div>

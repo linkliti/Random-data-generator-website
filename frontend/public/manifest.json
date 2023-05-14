@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Random Data Generator",
+  "name": "Проект направленный на создание случайных данных.",
   "icons": [
     {
       "src": "favicon.ico",
