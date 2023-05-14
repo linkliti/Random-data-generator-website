@@ -7,15 +7,20 @@ import { Link } from "./NavLink";
 import { SignInButton } from "./signButtons/SignInButton";
 import { SignOutButton } from "./signButtons/SignOutButton";
 
-const Header = observer((props) => {
-  var links = props.links;
-  var linkItems = [];
+const Header = observer(() => {
   const { user } = useContext(Context);
+
+  var links = [
+    { text: "Генератор", url: "/generator/default/1" },
+    { text: "Документация Faker", url: "/doc" },
+  ];
+
+  var linkItems = [];
 
   for (let i = 0; i < links.length; i++) {
     // "as={NavLink} to=" instead of "href" for no page refresh
     // 'react-router-bootstrap' is not required
-    linkItems.push(<Link text={links[i].text} href={links[i].url} />);
+    linkItems.push(<Link key={i} text={links[i].text} href={links[i].url} />);
   }
   return (
     <>

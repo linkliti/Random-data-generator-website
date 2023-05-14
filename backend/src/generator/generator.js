@@ -4,8 +4,10 @@ const blacklistedKeys = [
   "_locale",
   "_localeFallback",
   "locales",
+  "rawDefinitions",
+  "definitions"
 ];
-const blacklistedSubkeys = { helpers: ["fake", "unique", "multiple"]};
+const blacklistedSubkeys = { helpers: ["fake", "unique", "multiple"] };
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -13,7 +15,7 @@ BigInt.prototype.toJSON = function () {
 
 module.exports = {
   getOptions: function () {
-    const { faker } = require("@faker-js/faker");
+    const { faker } = require("@faker-js/faker/locale/ru");
     const keys = Object.keys(faker);
     const filteredKeys = keys.filter((key) => !blacklistedKeys.includes(key));
 
@@ -49,7 +51,9 @@ module.exports = {
         faker.setDefaultRefDate(new Date("2020-01-01"));
         for (let i = 0; i < req.count; i++) {
           faker.seed(Number(req.seed) + i);
-          data.push(faker[req.category][req.func](params));
+          var fakerFunc =
+            "{{" + req.category + "." + req.func + "(" + req.params + ")}}";
+          data.push(faker.helpers.fake(fakerFunc));
         }
       } else {
         for (let i = 0; i < req.count; i++) {

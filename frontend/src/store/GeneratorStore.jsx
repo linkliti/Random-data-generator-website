@@ -2,77 +2,44 @@ import { makeAutoObservable } from "mobx";
 
 export default class GeneratorStore {
   constructor() {
-    this._category = '';
-    this._func = '';
-    this._lang = 'ru';
-    this._seed = '';
-    this._count= '1';
-    this._params = '';
-    this._result = 'Для появления результата заполните настройки и нажмите "Сгенерировать"';
-    this._outNewLine = true;
-    this._outCommas = false;
-    this._outWrap = false;
+    this._Save0 = {
+      category: "",
+      func: "",
+      lang: "ru",
+      seed: "",
+      count: "1",
+      params: "",
+      result:
+        'Для появления результата заполните настройки и нажмите "Сгенерировать"',
+      outNewLine: true,
+      outCommas: false,
+      outWrap: false,
+    };
+    this._Save1 = { ...this._Save0 };
+    this._Save2 = { ...this._Save0 };
+    this._Save3 = { ...this._Save0 };
+    this._Save4 = { ...this._Save0 };
+
     makeAutoObservable(this);
   }
 
-  setCategory(data) {
-    this._category = data;
+  setSave(id, param, data) {
+    this["_Save" + id][param] = data;
   }
-  get category() {
-    return this._category;
+
+  get Save0() {
+    return this._Save0;
   }
-  setFunc(data) {
-    this._func = data;
+  get Save1() {
+    return this._Save1;
   }
-  get func() {
-    return this._func;
+  get Save2() {
+    return this._Save2;
   }
-  setLang(data) {
-    this._lang = data;
+  get Save3() {
+    return this._Save3;
   }
-  get lang() {
-    return this._lang;
-  }
-  setSeed(data) {
-    this._seed = data;
-  }
-  get seed() {
-    return this._seed;
-  }
-  setCount(data) {
-    this._count = data;
-  }
-  get count() {
-    return this._count;
-  }
-  setParams(data) {
-    this._params = data;
-  }
-  get params() {
-    return this._params;
-  }
-  setResult(data) {
-    this._result = data;
-  }
-  get result() {
-    return this._result;
-  }
-  setOutNewLine(data) {
-    this._outNewLine = data;
-  }
-  get outNewLine() {
-    return this._outNewLine;
-  }
-  setOutCommas(data) {
-    this._outCommas = data;
-  }
-  get outCommas() {
-    return this._outCommas;
-  }
-  setOutWrap(data) {
-    this._outWrap = data;
-  }
-  get outWrap() {
-    return this._outWrap;
+  get Save4() {
+    return this._Save3;
   }
 }

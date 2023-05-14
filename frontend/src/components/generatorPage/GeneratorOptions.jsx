@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { GeneratorTable } from "./GeneratorTable";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   ButtonGroup,
-  Container,
   Form,
   Ratio,
   ToggleButton,
@@ -15,9 +14,11 @@ import { Context, GenContext } from "../..";
 import axios from "axios";
 import locales from "./locales.json";
 
-export const GeneratorOptions = observer(() => {
+export const GeneratorOptions = observer((props) => {
+  const storeID = props.storeID;
   const { user } = useContext(Context);
   const { genOpt } = useContext(GenContext);
+  //genOpt.setSave(storeID, "category", "test");
 
   var msg = user.options.message;
   var options = [];
@@ -33,21 +34,25 @@ export const GeneratorOptions = observer(() => {
         <h4>Функции:</h4>
         <>
           <ButtonGroup className="d-flex flex-wrap">
-            {msg[genOpt.category].map((value, idx) => (
-              <ToggleButton
-                className="flex-grow-0 text-white"
-                key={idx}
-                id={`radio-${idx}`}
-                type="radio"
-                variant="outline-primary"
-                name="radio"
-                value={value}
-                checked={genOpt.func === value}
-                onChange={(e) => genOpt.setFunc(e.currentTarget.value)}
-              >
-                {value}
-              </ToggleButton>
-            ))}
+            {user.options.message[genOpt["Save" + storeID].category].map(
+              (value, idx) => (
+                <ToggleButton
+                  className="flex-grow-0 text-white"
+                  key={idx}
+                  id={`radio-${idx}`}
+                  type="radio"
+                  variant="outline-primary"
+                  name="radio"
+                  value={value}
+                  checked={genOpt["Save" + storeID].func === value}
+                  onChange={(e) =>
+                    genOpt.setSave(storeID, "func", e.currentTarget.value)
+                  }
+                >
+                  {value}
+                </ToggleButton>
+              )
+            )}
           </ButtonGroup>
         </>
       </>
@@ -58,13 +63,13 @@ export const GeneratorOptions = observer(() => {
     // iframe with faker dock
     return (
       <>
-        <h4>Описание {genOpt.category + "." + genOpt.func}:</h4>
+        <h4>Описание {genOpt['Save' + storeID].category+ "." + genOpt['Save' + storeID].func}:</h4>
         <Ratio aspectRatio={100} className="">
           <iframe
             title="documentation"
             src={`https://next.fakerjs.dev/api/${
-              genOpt.category
-            }.html#${genOpt.func.toLowerCase()}`}
+              genOpt['Save' + storeID].category
+            }.html#${genOpt['Save' + storeID].func.toLowerCase()}`}
           ></iframe>
         </Ratio>
       </>
@@ -74,8 +79,8 @@ export const GeneratorOptions = observer(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const category = genOpt.category;
-    const func = genOpt.func;
+    const category = genOpt['Save' + storeID].category;
+    const func = genOpt['Save' + storeID].func;
     const lang = data.get("lang");
     const seed = data.get("seed");
     const count = data.get("count");
@@ -85,7 +90,7 @@ export const GeneratorOptions = observer(() => {
     await axios
       .post("http://localhost:3001/generator/generate", message)
       .then((response) => {
-        genOpt.setResult(response.data.message);
+        genOpt.setSave(storeID, "result", response.data.message);
       })
       .catch((error) => {
         console.error(error);
@@ -96,13 +101,13 @@ export const GeneratorOptions = observer(() => {
     // input fields for seed and parameters
     return (
       <Form onSubmit={handleSubmit} className="w-100 mt-4">
-        <Form.Group className="mb-3" controlId="formLang">
+        <Form.Group className="mb-3" controlid="formLang">
           <Form.Label>Предпочитаемый язык</Form.Label>
           <Form.Select
             name="lang"
-            defaultValue={genOpt.lang}
+            value={genOpt["Save" + storeID].lang}
             onChange={(e) => {
-              genOpt.setLang(e.target.value);
+              genOpt.setSave(storeID, "lang", e.target.value);
             }}
           >
             {Object.keys(locales).map((key) => (
@@ -113,25 +118,25 @@ export const GeneratorOptions = observer(() => {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formSeed">
+        <Form.Group className="mb-3" controlid="formSeed">
           <Form.Label>Сид случайности</Form.Label>
           <Form.Control
             name="seed"
-            value={genOpt.seed}
+            value={genOpt['Save' + storeID].seed}
             autoComplete="off"
             type="number"
             placeholder="Сид (необязательно)"
             onChange={(e) => {
-              genOpt.setSeed(e.target.value);
+              genOpt.setSave(storeID, "seed", e.target.value);
             }}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formCount">
+        <Form.Group className="mb-3" controlid="formCount">
           <Form.Label>Количество записей</Form.Label>
           <Form.Control
             name="count"
-            value={genOpt.count}
+            value={genOpt['Save' + storeID].count}
             autoComplete="off"
             type="number"
             placeholder="Количество"
@@ -139,21 +144,24 @@ export const GeneratorOptions = observer(() => {
             min="1"
             max="1000"
             onChange={(e) => {
-              genOpt.setCount(e.target.value);
+              genOpt.setSave(storeID, "count", e.target.value);
             }}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formParams">
-          <Form.Label>Параметры (для параметров и элементов массивов нужно использовать двойные кавычки)</Form.Label>
+        <Form.Group className="mb-3" controlid="formParams">
+          <Form.Label>
+            Параметры (для параметров и элементов массивов нужно использовать
+            двойные кавычки)
+          </Form.Label>
           <Form.Control
             name="params"
-            value={genOpt.params}
+            value={genOpt["Save" + storeID].params}
             autoComplete="off"
             type="text"
             placeholder="Параметры из документации (необязательно)"
             onChange={(e) => {
-              genOpt.setParams(e.target.value);
+              genOpt.setSave(storeID, "params", e.target.value);
             }}
           />
         </Form.Group>
@@ -162,14 +170,20 @@ export const GeneratorOptions = observer(() => {
             <Button
               className="w-100"
               variant="primary"
-              disabled={!genOpt.func || !genOpt.category}
+              disabled={
+                !genOpt["Save" + storeID].func ||
+                !genOpt["Save" + storeID].category
+              }
               type="submit"
             >
               Сгенерировать
             </Button>
-            {genOpt.func ? (
+            {genOpt["Save" + storeID].func ? (
               <p className="mt-2">
-                Выбранная функция: {genOpt.category + "." + genOpt.func}
+                Выбранная функция:{" "}
+                {genOpt["Save" + storeID].category +
+                  "." +
+                  genOpt["Save" + storeID].func}
               </p>
             ) : (
               <p className="mt-2">Функция не выбрана</p>
@@ -178,38 +192,38 @@ export const GeneratorOptions = observer(() => {
           <Col className="px-0 my-auto">
             <Form.Check
               className="mb-3"
-              controlId="formOutNewLine"
+              controlid="formOutNewLine"
               name="outnewline"
               label="Разделять новыми строками"
               type="switch"
-              checked={genOpt.outNewLine}
+              checked={genOpt["Save" + storeID].outNewLine}
               inline
               onChange={(e) => {
-                genOpt.setOutNewLine(e.target.checked);
+                genOpt.setSave(storeID, "outNewLine", e.target.checked);
               }}
             />
             <Form.Check
               className="mb-3"
-              controlId="formOutCommas"
+              controlid="formOutCommas"
               name="outcommas"
               label="Запятые на конце"
               type="switch"
-              checked={genOpt.outCommas}
+              checked={genOpt["Save" + storeID].outCommas}
               inline
               onChange={(e) => {
-                genOpt.setOutCommas(e.target.checked);
+                genOpt.setSave(storeID, "outCommas", e.target.checked);
               }}
             />
             <Form.Check
               className="mb-3"
-              controlId="formOutWrap"
+              controlid="formOutWrap"
               name="outwrap"
               label="Обернуть в кавычки"
               type="switch"
-              checked={genOpt.outWrap}
+              checked={genOpt["Save" + storeID].outWrap}
               inline
               onChange={(e) => {
-                genOpt.setOutWrap(e.target.checked);
+                genOpt.setSave(storeID, "outWrap", e.target.checked);
               }}
             />
           </Col>
@@ -226,13 +240,13 @@ export const GeneratorOptions = observer(() => {
             <h4>Категория:</h4>
             <Form.Select
               className="form-select ms-4"
-              defaultValue={genOpt.category}
+              value={genOpt["Save" + storeID].category || "none"}
               onChange={(e) => {
-                genOpt.setCategory(e.target.value);
-                genOpt.setFunc();
+                genOpt.setSave(storeID, "category", e.target.value);
+                genOpt.setSave(storeID, "func", false);
               }}
             >
-              <option value="none" selected disabled hidden>
+              <option value="none" disabled hidden>
                 Выберите категорию
               </option>
               {options.map((option) => (
@@ -242,7 +256,7 @@ export const GeneratorOptions = observer(() => {
               ))}
             </Form.Select>
           </div>
-          {!genOpt.category ? (
+          {!genOpt["Save" + storeID].category ? (
             <></>
           ) : (
             <>
@@ -252,10 +266,10 @@ export const GeneratorOptions = observer(() => {
           )}
         </Col>
         <Col className="mt-4 col-lg-6 col-md-12 col-sm-12">
-          {!genOpt.func ? <></> : <GeneratorDocs />}
+          {!genOpt["Save" + storeID].func ? <></> : <GeneratorDocs />}
         </Col>
       </Row>
-      <GeneratorTable />
+      <GeneratorTable storeID={storeID} />
     </>
   );
 });

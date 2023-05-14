@@ -17,7 +17,8 @@ export const GeneratorHeader = observer(() => {
   return (
     <>
       <Nav variant="tabs" defaultActiveKey="1">
-        <Link text={"Временная"} href={"default"} />
+        <Link text={"Временный"} href={"default/1"} />
+        <Link text={"Временный 2"} href={"default/2"} />
         {user.isAuth ? (
           <>
             <Link text={"Сохранение 1"} href={"save/1"} />

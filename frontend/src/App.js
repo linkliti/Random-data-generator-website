@@ -9,11 +9,6 @@ import Header from "./components/basePage/Header";
 import MainRoutes from "./routes/MainRoutes";
 
 const App = observer(() => {
-  const HeaderLinks = [
-    { text: "Генератор", url: "/generator/default" },
-    { text: "Документация Faker", url: "/doc" },
-  ];
-
   const { user } = useContext(Context);
 
   const getUser = async () => {
@@ -34,7 +29,7 @@ const App = observer(() => {
   // Empty container used for sticky footer
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header links={HeaderLinks} />
+      <Header />
       <Container className="mt-4">
         <MainRoutes />
       </Container>

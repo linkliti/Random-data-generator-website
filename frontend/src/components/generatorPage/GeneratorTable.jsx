@@ -1,16 +1,15 @@
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { GenContext } from "../..";
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
 
-export const GeneratorTable = observer(() => {
+export const GeneratorTable = observer((props) => {
+  const storeID = props.storeID
   const { genOpt } = useContext(GenContext);
-  var arr = genOpt.result;
   function parseArr(arr) {
     if (
-      !(
-        arr ===
-        'Для появления результата заполните настройки и нажмите "Сгенерировать"'
+      (
+        arr.includes("]")
       )
     ) {
       try {
@@ -19,10 +18,10 @@ export const GeneratorTable = observer(() => {
         return 'Ошибка обработки JSON'
       }
       var separator = "";
-      if (genOpt.outCommas) separator += ",";
-      if (genOpt.outNewLine) separator += "\n";
+      if (genOpt["Save" + storeID].outCommas) separator += ",";
+      if (genOpt["Save" + storeID].outNewLine) separator += "\n";
       else separator += " ";
-      if (genOpt.outWrap) {
+      if (genOpt["Save" + storeID].outWrap) {
         return '"' + arr.join('"' + separator + '"') + '"';
       } else return arr.join(separator);
     }
@@ -38,7 +37,9 @@ export const GeneratorTable = observer(() => {
         <Col>
           <Button
             onClick={() => {
-              navigator.clipboard.writeText(parseArr(genOpt.result));
+              navigator.clipboard.writeText(
+                parseArr(genOpt["Save" + storeID].result)
+              );
             }}
           >
             Копировать
@@ -47,9 +48,9 @@ export const GeneratorTable = observer(() => {
       </Row>
       <div
         className="w-100 border rounded p-2 overflow-auto"
-        style={{ "whiteSpace": "pre-wrap" }}
+        style={{ whiteSpace: "pre-wrap" }}
       >
-        {parseArr(genOpt.result)}
+        {parseArr(genOpt["Save" + storeID].result)}
       </div>
     </div>
   );
