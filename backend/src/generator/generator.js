@@ -5,7 +5,7 @@ const blacklistedKeys = [
   "_localeFallback",
   "locales",
 ];
-const blacklistedSubkeys = { company: "companyName", datatype: "array" };
+const blacklistedSubkeys = { helpers: ["fake", "unique", "multiple"]};
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -43,37 +43,6 @@ module.exports = {
       return "Invalid parameters";
     var { faker } = require("@faker-js/faker/locale/" + req.lang);
     try {
-      if (req.params) {
-        var text = req.params;
-        var params;
-        if (
-          (text[0] == '"' && text[text.length - 1] == '"') ||
-          (text[0] == "'" && text[text.length - 1] == "'")
-        ) {
-          try {
-            params = req.params.slice(1, -1);
-            params = parseInt(params);
-            if (isNaN(params) || req.params.includes(',')) throw new Error("Parameter is not a number!");
-            console.log("Number param");
-          } catch (e) {
-            try {
-              params = JSON.parse(req.params).split(", ");
-              console.log("Array param");
-            } catch (e) {
-              params = req.params.slice(1, -1);
-              console.log("String param");
-            }
-          }
-        } else {
-          console.log("Full params");
-          params = {};
-          req.params.split(", ").forEach((pair) => {
-            const [key, value] = pair.split(": ");
-            params[key] = value;
-          });
-        }
-      }
-      //const params = req.params ? JSON.parse(req.params) : "";
       var data = [];
       var isSeeded = req.seed ? true : false;
       if (isSeeded) {
@@ -84,7 +53,9 @@ module.exports = {
         }
       } else {
         for (let i = 0; i < req.count; i++) {
-          data.push(faker[req.category][req.func](params));
+          var fakerFunc =
+            "{{" + req.category + "." + req.func + "(" + req.params + ")}}";
+          data.push(faker.helpers.fake(fakerFunc));
         }
       }
       console.log("Sending data to client side");

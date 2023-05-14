@@ -145,7 +145,7 @@ export const GeneratorOptions = observer(() => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formParams">
-          <Form.Label>Параметры (чтобы передать одну строку используйте кавычки)</Form.Label>
+          <Form.Label>Параметры (для параметров и элементов массивов нужно использовать двойные кавычки)</Form.Label>
           <Form.Control
             name="params"
             value={genOpt.params}

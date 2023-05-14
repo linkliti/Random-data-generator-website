@@ -13,7 +13,11 @@ export const GeneratorTable = observer(() => {
         'Для появления результата заполните настройки и нажмите "Сгенерировать"'
       )
     ) {
+      try {
       arr = JSON.parse(arr);
+      } catch (e) {
+        return 'Ошибка обработки JSON'
+      }
       var separator = "";
       if (genOpt.outCommas) separator += ",";
       if (genOpt.outNewLine) separator += "\n";
@@ -42,7 +46,7 @@ export const GeneratorTable = observer(() => {
         </Col>
       </Row>
       <div
-        className="w-100 border rounded p-2"
+        className="w-100 border rounded p-2 overflow-auto"
         style={{ "whiteSpace": "pre-wrap" }}
       >
         {parseArr(genOpt.result)}
