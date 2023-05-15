@@ -9,18 +9,6 @@ import axios from "axios";
 export const Generator = observer(() => {
   const { user } = useContext(Context);
 
-  async function getGenOptions() {
-    if (!user.options) {
-      const { data } = await axios.get(
-        "http://localhost:3001/generator/options"
-      );
-      user.setOptions(data);
-    }
-  }
-  useEffect(() => {
-    getGenOptions();
-  }, []);
-
   return (
     <>
       <GeneratorHeader />

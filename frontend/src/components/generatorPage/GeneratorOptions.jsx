@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { GeneratorTable } from "./GeneratorTable";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   ButtonGroup,
   Form,
@@ -15,15 +15,14 @@ import axios from "axios";
 import locales from "./locales.json";
 
 export const GeneratorOptions = observer((props) => {
+  var hasUnsavedChanges = false;
   const storeID = props.storeID;
+  const isUserSave = storeID >= 2 && storeID <= 4;
   const { user } = useContext(Context);
   const { genOpt } = useContext(GenContext);
-  //genOpt.setSave(storeID, "category", "test");
-
-  var msg = user.options.message;
+  console.log("save ", genOpt["Save" + storeID]);
   var options = [];
-
-  for (var key in msg) {
+  for (var key in user.options.message) {
     options.push({ value: key, label: key });
   }
   options.sort((a, b) => (a.label > b.label ? 1 : -1));
@@ -45,9 +44,9 @@ export const GeneratorOptions = observer((props) => {
                   name="radio"
                   value={value}
                   checked={genOpt["Save" + storeID].func === value}
-                  onChange={(e) =>
-                    genOpt.setSave(storeID, "func", e.currentTarget.value)
-                  }
+                  onChange={(e) => {
+                    genOpt.setSave(storeID, "func", e.currentTarget.value);
+                  }}
                 >
                   {value}
                 </ToggleButton>
@@ -63,13 +62,19 @@ export const GeneratorOptions = observer((props) => {
     // iframe with faker dock
     return (
       <>
-        <h4>Описание {genOpt['Save' + storeID].category+ "." + genOpt['Save' + storeID].func}:</h4>
+        <h4>
+          Описание{" "}
+          {genOpt["Save" + storeID].category +
+            "." +
+            genOpt["Save" + storeID].func}
+          :
+        </h4>
         <Ratio aspectRatio={100} className="">
           <iframe
             title="documentation"
             src={`https://next.fakerjs.dev/api/${
-              genOpt['Save' + storeID].category
-            }.html#${genOpt['Save' + storeID].func.toLowerCase()}`}
+              genOpt["Save" + storeID].category
+            }.html#${genOpt["Save" + storeID].func.toLowerCase()}`}
           ></iframe>
         </Ratio>
       </>
@@ -79,12 +84,15 @@ export const GeneratorOptions = observer((props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const category = genOpt['Save' + storeID].category;
-    const func = genOpt['Save' + storeID].func;
+    const category = genOpt["Save" + storeID].category;
+    const func = genOpt["Save" + storeID].func;
     const lang = data.get("lang");
     const seed = data.get("seed");
     const count = data.get("count");
     const params = data.get("params");
+    const outNewLine = genOpt["Save" + storeID].outNewLine;
+    const outCommas = genOpt["Save" + storeID].outCommas;
+    const outWrap = genOpt["Save" + storeID].outWrap;
     const message = { category, func, lang, seed, count, params };
     console.log(message);
     await axios
@@ -95,6 +103,31 @@ export const GeneratorOptions = observer((props) => {
       .catch((error) => {
         console.error(error);
       });
+    if (user.isAuth && isUserSave) {
+      await axios
+        .post(
+          "http://localhost:3001/save/save",
+          {
+            storeID,
+            category,
+            func,
+            lang,
+            seed,
+            count,
+            params,
+            outNewLine,
+            outCommas,
+            outWrap,
+          },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          console.log("save result", response.data.message);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const InputFields = observer(() => {
@@ -122,7 +155,7 @@ export const GeneratorOptions = observer((props) => {
           <Form.Label>Сид случайности</Form.Label>
           <Form.Control
             name="seed"
-            value={genOpt['Save' + storeID].seed}
+            value={genOpt["Save" + storeID].seed}
             autoComplete="off"
             type="number"
             placeholder="Сид (необязательно)"
@@ -136,7 +169,7 @@ export const GeneratorOptions = observer((props) => {
           <Form.Label>Количество записей</Form.Label>
           <Form.Control
             name="count"
-            value={genOpt['Save' + storeID].count}
+            value={genOpt["Save" + storeID].count}
             autoComplete="off"
             type="number"
             placeholder="Количество"
@@ -236,6 +269,11 @@ export const GeneratorOptions = observer((props) => {
     <>
       <Row>
         <Col className="col-lg-6 col-md-12 col-sm-12 mt-4 ">
+          {isUserSave ? (
+            <p>Для сохранения настроек необходимо сгенерировать данные</p>
+          ) : (
+            <p></p>
+          )}
           <div className="d-flex align-items-center">
             <h4>Категория:</h4>
             <Form.Select

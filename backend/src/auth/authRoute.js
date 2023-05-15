@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
+const save = require("../save/save");
 
 router.get("/login/success", (req, res) => {
   if (req.user) {
@@ -35,7 +36,14 @@ router.get(
   passport.authenticate("microsoft", { failureRedirect: "/" }),
   function (req, res) {
     // Successful authentication, redirect home.
-    res.redirect(process.env.CLIENT_URL + "/generator");
+    save
+      .initUser(req.user.id)
+      .then((response) => {
+        res.redirect(process.env.CLIENT_URL + "");
+      })
+      .catch((err) => {
+        res.status(500).send(error);
+      });
   }
 );
 

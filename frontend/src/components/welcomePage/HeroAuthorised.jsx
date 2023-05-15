@@ -7,14 +7,9 @@ function HeroAuthorised() {
 
   return (
     <Container>
-      <h1>Главная</h1>
-      <Row>
-        <Col>
-          <h2>Профиль</h2>
-          <p>Имя: {user.user.displayName} </p>
-          <p>Почта: {user.user.userPrincipalName} </p>
-        </Col>
-      </Row>
+      <h1>Добро пожаловать</h1>
+      <h4 className="mt-4">Имя: {user.user.displayName} </h4>
+      <h4>Почта: {user.user.userPrincipalName} </h4>
     </Container>
   );
 }

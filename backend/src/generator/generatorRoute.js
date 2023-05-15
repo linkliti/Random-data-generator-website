@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const generator = require("./generator/generator");
+const generator = require("./generator");
 
 router.get("/options", (req, res) => {
   var msg = generator.getOptions();
