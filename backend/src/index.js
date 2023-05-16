@@ -33,7 +33,6 @@ app.use(
   cookieSession({
     name: "session",
     keys: ["rdg"],
-    domain: process.env.CLIENT_URL,
     maxAge: 24 * 60 * 60 * 100,
   })
 );
