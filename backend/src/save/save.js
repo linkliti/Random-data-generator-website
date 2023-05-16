@@ -6,17 +6,16 @@ CREATE DATABASE rdgUserSaves;
 
 const Pool = require("pg").Pool;
 const pool = new Pool({
-  connectionstring: process.env.DB_CONLINK
+  connectionString: process.env.DB_CONLINK,
 });
-  /*
-  user: process.env.DB_USER,
-  host: process.env.DB_URL,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASS,
-  port: 5432,
+/*
+user: process.env.DB_USER,
+password: process.env.DB_PASS,
+port: 5432,
+host: process.env.DB_URL,
+database: process.env.DB_NAME,
 });
 */
-
 
 pool.query(
   "CREATE TABLE IF NOT EXISTS UserSaves (id VARCHAR UNIQUE , save1 json NOT NULL, save2 json NOT NULL, save3 json NOT NULL)",
