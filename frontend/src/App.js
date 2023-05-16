@@ -16,14 +16,14 @@ const App = observer(() => {
   async function getGenOptions() {
     if (!user.options) {
       const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/generator/options"
+        process.env.REACT_APP_API_URL + "generator/options"
       );
       user.setOptions(data);
     }
   }
 
   async function getGenSaves() {
-      const { data } = await axios.get(process.env.REACT_APP_API_URL + "/save/get", {
+      const { data } = await axios.get(process.env.REACT_APP_API_URL + "save/get", {
         withCredentials: true,
       });
       genOpt.setFullSave(data.message);
@@ -32,7 +32,7 @@ const App = observer(() => {
 
   const getUser = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
+      const url = `${process.env.REACT_APP_API_URL}auth/login/success`;
       const { data } = await axios.get(url, { withCredentials: true });
       user.setUser(data.user._json);
       user.setIsAuth(true);

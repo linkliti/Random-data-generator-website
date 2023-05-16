@@ -96,7 +96,7 @@ export const GeneratorOptions = observer((props) => {
     const message = { category, func, lang, seed, count, params };
     console.log(message);
     await axios
-      .post(process.env.REACT_APP_API_URL + "/generator/generate", message)
+      .post(process.env.REACT_APP_API_URL + "generator/generate", message)
       .then((response) => {
         genOpt.setSave(storeID, "result", response.data.message);
       })
@@ -106,7 +106,7 @@ export const GeneratorOptions = observer((props) => {
     if (user.isAuth && isUserSave) {
       await axios
         .post(
-          process.env.REACT_APP_API_URL + "/save/save",
+          process.env.REACT_APP_API_URL + "save/save",
           {
             storeID,
             category,

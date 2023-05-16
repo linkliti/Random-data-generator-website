@@ -9,7 +9,7 @@ export const SignOutButton = observer(() => {
   var email = user.user.userPrincipalName;
 
   const handleLogout = () => {
-    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+    window.open(`${process.env.REACT_APP_API_URL}auth/logout`, "_self");
   };
 
   return (
