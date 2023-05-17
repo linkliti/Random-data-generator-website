@@ -3,11 +3,11 @@ const passport = require("passport");
 const save = require("../save/save");
 
 router.get("/login/success", (req, res) => {
-  if (req.session.passport.user) {
+  if (req.user) {
     res.status(200).json({
       error: false,
       message: "Successfully Loged In",
-      user: req.session.passport.user,
+      user: req.user,
     });
   } else {
     res.status(403).json({ error: true, message: "Not Authorized" });
@@ -37,7 +37,7 @@ router.get(
   function (req, res) {
     // Successful authentication, redirect home.
     save
-      .initUser(req.session.passport.user.id)
+      .initUser(req.user.id)
       .then((response) => {
         res.redirect(process.env.CLIENT_URL + "");
       })

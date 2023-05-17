@@ -2,9 +2,9 @@ const router = require("express").Router();
 const save = require("./save");
 
 router.get("/get", (req, res) => {
-  if (req.session.passport.user) {
+  if (req.user) {
     save
-      .getData(req.session.passport.user.id)
+      .getData(req.user.id)
       .then((response) => {
         res.status(200).json({
           error: false,
@@ -21,9 +21,9 @@ router.get("/get", (req, res) => {
 });
 
 router.post("/save", (req, res) => {
-  if (req.session.passport.user) {
+  if (req.user) {
     save
-      .saveData(req.body, req.session.passport.user.id)
+      .saveData(req.body, req.user.id)
       .then((response) => {
         res.status(200).json({
           error: false,
