@@ -42,7 +42,7 @@ router.get(
         res.redirect(process.env.CLIENT_URL + "");
       })
       .catch((err) => {
-        res.status(500).send(error);
+        res.status(500).send(err);
       });
   }
 );

@@ -13,7 +13,7 @@ router.get("/get", (req, res) => {
         console.log("Sent user data");
       })
       .catch((e) => {
-        res.status(500).send(error);
+        res.status(500).send(e);
       });
   } else {
     res.status(403).json({ error: true, message: "Not Authorized" });

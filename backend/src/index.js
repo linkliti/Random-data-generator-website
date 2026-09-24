@@ -32,7 +32,7 @@ require("./save/save").saveData("752bfd145", {
 app.use(
   cookieSession({
     name: "session",
-    keys: ["rdg"],
+    keys: [process.env.SESSION_KEY],
     maxAge: 24 * 60 * 60 * 100,
   })
 );
